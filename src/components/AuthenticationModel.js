@@ -1,7 +1,8 @@
 import { Modal, View, Text, TouchableOpacity, TextInput, StyleSheet, Pressable } from 'react-native';
-import React, { useContext, useState, useEffect} from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { registerWithEmailAndPassword, loginWithEmailAndPassword, logout } from '../features/firebase/UserAuth';
 
+import { MaterialIcons } from '@expo/vector-icons';
 import AuthContext from '../features/context/authContext';
 
 const AuthenticationModel = ({ modelVisible, setModelVisible }) => {
@@ -10,37 +11,45 @@ const AuthenticationModel = ({ modelVisible, setModelVisible }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const {currentUser,setCurrentUser,setIsLoggedIn ,isLoggedIn} = useContext(AuthContext);
+  const { currentUser, setCurrentUser, setIsLoggedIn, isLoggedIn } = useContext(AuthContext);
+  const [loginButtonDisabled, setLoginButtonDisabled] = useState(true);
+  const [registerButtonDisabled, setRegisterButtonDisabled] = useState(true);
 
-  const handleLogin = async() => {
-    const res= await loginWithEmailAndPassword(email,password)
-    if(res.success===true){
-      setCurrentUser(res.user);
-      setIsLoggedIn(true);
-      setModelVisible(false);
+  const handleLogin = async () => {
+    if (email && password) {
+      const res = await loginWithEmailAndPassword(email, password);
+      if (res.success === true) {
+        setCurrentUser(res.user);
+        setIsLoggedIn(true);
+        setModelVisible(false);
+      }
     }
   };
-  
 
-  const handleRegister = async() => {
-      // setLoading(true)
-      const res = await registerWithEmailAndPassword(name,email,password)
-      if(res.success===true){
-        // setCurrentUser({name,email});
+
+  const handleRegister = async () => {
+    if (name && email && password) {
+      const res = await registerWithEmailAndPassword(name, email, password);
+      if (res.success === true) {
+        // setCurrentUser({ name, email });
         // setIsLoggedIn(true);
         setModelVisible(false);
       }
+    }
   };
 
-  
+
 
 
   useEffect(() => {
     if (currentUser) {
       setIsLoggedIn(true);
     }
-  }, [currentUser]);
- 
+    setLoginButtonDisabled(!(email && password));
+    setRegisterButtonDisabled(!(name && email && password));
+  }, [currentUser, name, email, password]);
+  
+
 
   return (
     <View style={{ flex: 1, width: 1150 }}>
@@ -53,13 +62,13 @@ const AuthenticationModel = ({ modelVisible, setModelVisible }) => {
         }}
       >
         {type === "login" ? (
-          <Pressable onPress={()=>setModelVisible(false)} 
+          <Pressable onPress={() => setModelVisible(false)}
             style={{
               flex: 1,
               justifyContent: "center",
               alignItems: "center",
               backgroundColor: "rgba(0, 0, 0, 0.5)",
-              
+
             }}
           >
             <View
@@ -81,7 +90,7 @@ const AuthenticationModel = ({ modelVisible, setModelVisible }) => {
 
               <Text style={[styles.label, { marginTop: 12 }]}>Password: </Text>
               <TextInput
-              
+
                 name="password"
                 value={password}
                 onChangeText={(t) => setPassword(t)}
@@ -90,24 +99,32 @@ const AuthenticationModel = ({ modelVisible, setModelVisible }) => {
               />
 
               <TouchableOpacity
-              onPress={handleLogin}
-                style={{
+                onPress={handleLogin}
+                style={[{
                   backgroundColor: "black",
                   paddingVertical: 12,
                   borderRadius: 10,
                   marginTop: 26,
-                }}
+                }, loginButtonDisabled && { backgroundColor: "#888" }]}
+                disabled={loginButtonDisabled}
               >
                 <Text
-                  style={{
+                  style={[{
                     color: "white",
                     fontSize: 16,
                     fontWeight: "bold",
                     alignSelf: "center",
-                  }}
+                  }, loginButtonDisabled && { color: "black" }]}
+
                 >
                   Login
                 </Text>
+                {
+                  loginButtonDisabled &&
+                  (
+                    <MaterialIcons name="lock" size={12} color="white" />
+                  )
+                }
               </TouchableOpacity>
 
               <View style={{ marginTop: 17, justifyContent: "center", flexDirection: 'row', }}>
@@ -125,7 +142,7 @@ const AuthenticationModel = ({ modelVisible, setModelVisible }) => {
               } */}
           </Pressable>
         ) : (
-          <Pressable onPress={()=>setModelVisible(false)} 
+          <Pressable onPress={() => setModelVisible(false)}
             style={{
               flex: 1,
               justifyContent: "center",
@@ -162,31 +179,38 @@ const AuthenticationModel = ({ modelVisible, setModelVisible }) => {
               <TextInput placeholder="Minimum 6 characters"
                 name="password"
                 value={password}
-                onChangeText={(t) => setPassword(t)}                
+                onChangeText={(t) => setPassword(t)}
                 secureTextEntry={true}
                 style={styles.input}
               />
 
 
-              <TouchableOpacity              
-              onPress={handleRegister}
-                style={{
+              <TouchableOpacity
+                onPress={handleRegister}
+                style={[{
                   backgroundColor: "black",
                   paddingVertical: 12,
                   borderRadius: 10,
                   marginTop: 26,
-                }}
+                }, registerButtonDisabled && { backgroundColor: "#888" }]}
+                disabled={registerButtonDisabled}
               >
                 <Text
-                  style={{
+                  style={[{
                     color: "white",
                     fontSize: 16,
                     fontWeight: "bold",
-                    alignSelf: "center",
-                  }}
+                    alignSelf: "center"}
+                    , registerButtonDisabled && { color: "black" }]}
                 >
                   Register
                 </Text>
+                {
+                  registerButtonDisabled &&
+                  (
+                    <MaterialIcons name="lock" size={12} color="white" />
+                  )
+                }
               </TouchableOpacity>
 
               <View style={{ marginTop: 17, justifyContent: "center", flexDirection: 'row', }}>
