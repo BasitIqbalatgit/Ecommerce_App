@@ -24,7 +24,7 @@ const CartScreen = ({ navigation }) => {
     const res = await getCartItems();
     if (res.success === true) {
       setCartItems(res.data);
-      setTotal(res.subTotal); // or use calculateTotalAmount(res.data);
+      calculateTotalAmount(res.data);
     }
   }, [setCartItems, calculateTotalAmount]);
 
