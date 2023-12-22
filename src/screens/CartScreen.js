@@ -6,11 +6,15 @@ import TotalSummaryCard from "../components/TotalSummaryCard";
 import CartContext from "../features/context/cartContext";
 import { getCartItems } from "../features/firebase/cart";
 import AuthContext from "../features/context/authContext";
+import LottieView from 'lottie-react-native';
 
+import AnimatedLottieView from "lottie-react-native";
 const CartScreen = ({ navigation }) => {
   const [total, setTotal] = useState();
   const { currentUser, isLoggedIn } = useContext(AuthContext);
   const { cartItems, setCartItems } = useContext(CartContext);
+  // const {checkAnime, setCheckAnime} = useContext(AnimeContext)
+  const [checkAnime, setCheckAnime] = useState(false);
 
   const calculateTotalAmount = useCallback(async (data) => {
     const subTotal = await data.reduce(
@@ -35,8 +39,20 @@ const CartScreen = ({ navigation }) => {
     fetchCartItems();
   }, [currentUser, fetchCartItems]);
 
+  
+
   return (
     <SafeAreaView style={{ flex: 1, width: "100%", padding: 30, backgroundColor: "white" }}>
+    {checkAnime ? (
+      <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
+      <LottieView
+        style={{ width: 250, height: 250 }}
+        source={require('../../assets/check.json')}
+        autoPlay={true}
+        loop={false}
+        onAnimationFinish={()=>setCheckAnime(false)}
+      /></View>
+    ) : (<>
       <View>
         <Text style={{ fontWeight: "bold", fontSize: 22 }}>My Cart</Text>
       </View>
@@ -66,8 +82,9 @@ const CartScreen = ({ navigation }) => {
         </View>
       )}
       <View>
-        <TotalSummaryCard totalPrice={total} />
+        <TotalSummaryCard totalPrice={total} setTotalPrice={setTotal} setCheckAnime={setCheckAnime} />
       </View>
+      </>)}
     </SafeAreaView>
   );
 };

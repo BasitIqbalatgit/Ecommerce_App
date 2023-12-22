@@ -7,12 +7,14 @@ const Tab = createBottomTabNavigator();
 const TabNavigator =()=>{
     return(
         <Tab.Navigator 
+       
         screenOptions={{
-            headerShown:false,
-            tabBarShowLabel:false,
-            tabBarActiveTintColor:"black",
-            tabBarInactiveTintColor:"gray"
-        }}
+  headerShown: false,
+  tabBarShowLabel: false,  // Fix the typo here
+  tabBarActiveTintColor: "black",
+  tabBarInactiveTintColor: "gray",
+}}
+
         >
             <Tab.Screen name="home" component={MainStackNavigation} 
                 options={{

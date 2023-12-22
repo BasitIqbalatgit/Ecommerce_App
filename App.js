@@ -8,6 +8,8 @@ import { ProductProvider } from './src/features/context/productContext';
 import { CartProvider } from './src/features/context/cartContext';
 import { OrderProvider } from './src/features/context/orderContext';
 
+import LottieView from 'lottie-react-native';
+
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -16,7 +18,25 @@ export default function App() {
   const [cartItems, setCartItems] = useState(null);
   const [orders, setOrders] = useState(null);
   const [orderItems, setOrderItems] = useState([]);
+  const [animationFinished, setAnimationFinished] = useState(false);
+
+
+  
+  const handleAnimationFinish = () => {
+    setAnimationFinished(true);
+  };
   return (
+<>
+    {!animationFinished ? (
+      <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
+      <LottieView
+        style={{ width: 250, height: 250 }}
+        source={require('./assets/Wellcome.json')}
+        autoPlay={true}
+        loop={false}
+        onAnimationFinish={handleAnimationFinish}
+      /></View>
+    ) : (
     <AuthProvider
       value={{ currentUser, setCurrentUser, isLoggedIn, setIsLoggedIn }}
     >
@@ -34,7 +54,10 @@ export default function App() {
         </CartProvider>
       </ProductProvider>
     </AuthProvider>
+
     // <View sytle={styles.container}><Text>hi hello</Text></View>
+    )}
+    </>
   );
 }
 

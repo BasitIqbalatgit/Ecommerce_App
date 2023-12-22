@@ -6,9 +6,9 @@ import OrderContext from "../features/context/orderContext";
 import AuthContext from "../features/context/authContext";
 import { MaterialIcons } from '@expo/vector-icons';
 
-const TotalSummaryCard = ({ totalPrice }) => {
+const TotalSummaryCard = ({ totalPrice, setTotalPrice,setCheckAnime }) => {
   const { isLoggedIn } = useContext(AuthContext);
-  const { setCartItems } = useContext(CartContext);
+  const { cartItems,setCartItems } = useContext(CartContext);
   const { setOrderItems } = useContext(OrderContext);
 
   const placeOrder = async () => {
@@ -17,6 +17,9 @@ const TotalSummaryCard = ({ totalPrice }) => {
       ToastAndroid.show("Order placed successfully!!!", ToastAndroid.BOTTOM);
       setCartItems([]);
       setOrderItems(res.data);
+      setTotalPrice("0")
+      setCheckAnime(true);
+
     }
   };
 
@@ -29,11 +32,11 @@ const TotalSummaryCard = ({ totalPrice }) => {
       <Pressable
         onPress={placeOrder}
         style={[styles.placeOrderButton, !isLoggedIn && styles.placeOrderButtonDisabled]}
-        disabled={!isLoggedIn}
+        disabled={!isLoggedIn && cartItems?.length > 0}
       >
         <Text style={[styles.placeOrderText, !isLoggedIn && {color:"black"}]}>Place Order</Text>
         {
-            !isLoggedIn &&
+            !isLoggedIn && (cartItems?.length > 0 )&&
             (
                 <MaterialIcons name="lock" size={8} color="white" />
             )
