@@ -10,8 +10,8 @@ const AuthenticationModel = ({ modelVisible, setModelVisible }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const { currentUser, setCurrentUser, setIsLoggedIn, isLoggedIn } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   const [loginButtonDisabled, setLoginButtonDisabled] = useState(true);
   const [registerButtonDisabled, setRegisterButtonDisabled] = useState(true);
 

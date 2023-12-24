@@ -5,6 +5,11 @@ import DetailScreen from "../screens/DetailScreen";
 import ProductListScreen from "../screens/ProductListScreen";
 import OrderScreen from "../screens/OrderScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import WelcomeScreen from "../screens/WelcomeScreen";
+import TabNavigator from "./TabNavigation";
+import LoginScreen from "../screens/LoginScreen";
+import RegisterScreen from "../screens/RegisterScreen";
+import  AdminDrawer  from "./DrawerNavigation";
 
 
 const Stack = createStackNavigator();
@@ -15,6 +20,18 @@ const MainStackNavigation =()=>{
             <Stack.Screen name="home-screen" component={HomeScreen} />
             <Stack.Screen name="detail-screen" component={DetailScreen} />
             <Stack.Screen name="product-screen" component={ProductListScreen} />
+        </Stack.Navigator>
+    )
+}
+
+const StartingStack =()=>{
+    return(
+        <Stack.Navigator initialRouteName="wellcomeScreen" screenOptions={{ headerShown:false,}}>
+            <Stack.Screen name="wellcomeScreen" component={WelcomeScreen}/>
+            <Stack.Screen name="LoginScreen" component={LoginScreen}/>
+            <Stack.Screen name="RegisterScreen" component={RegisterScreen}/>
+            <Stack.Screen name="Tab" component={TabNavigator}/>
+            <Stack.Screen name="Drawer" component={AdminDrawer}/>
         </Stack.Navigator>
     )
 }
@@ -62,4 +79,4 @@ const ProfileStackNavigator = ()=>{
 }
 
 
-export {MainStackNavigation, CartStackNavigator, OrderStackNavigator, ProfileStackNavigator};
+export {StartingStack,MainStackNavigation, CartStackNavigator, OrderStackNavigator, ProfileStackNavigator};

@@ -5,7 +5,7 @@ import User from "../../assets/user.png";
 import AuthContext from "../features/context/authContext";
 import { logout } from "../features/firebase/UserAuth";
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}) => {
   const { currentUser, setCurrentUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   const handleLogout = async () => {
@@ -14,6 +14,8 @@ const ProfileScreen = () => {
       ToastAndroid.show("Logged Out Successfully", ToastAndroid.BOTTOM);
       setIsLoggedIn(false);
       setCurrentUser(null);
+
+      navigation.navigate("wellcomeScreen");
     }
   };
 

@@ -40,19 +40,20 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-     
+          {(currentUser?.name === "Admin")?<View></View>:
           <View style={styles.header}>
             <View style={styles.menuIcon}>
-              <MaterialIcons name="menu" size={24} color="#fff" />
+             
+              <Image source={require("../../assets/images/Sherman.jpg")} style={styles.menuIconImage} />
             </View>
 
-            {!isLoggedIn && (
+            {/* {!isLoggedIn && (
               <Pressable style={styles.PressableStyle} onPress={() => setModelVisible(true)}>
                 <Image source={UserLogin} style={styles.userImage} />
                 <Text style={styles.loginText}>Login</Text>
               </Pressable>
-            )}
-          </View>
+            )} */}
+          </View>}
           <View style={{ paddingHorizontal: 20, marginTop: 24 }}>
             <Text style={{ fontWeight: 'bold', fontSize: 24 }}>Welcome! {currentUser?.name}</Text>
             <Text style={{ fontWeight: '600', fontSize: 20, color: '#808080' }}>Our Fashion App</Text>
@@ -77,7 +78,7 @@ const HomeScreen = ({ navigation }) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                paddingHorizontal: 15,
+                paddingHorizontal: 20,
               }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold' }}>New Arrivals</Text>
               <Pressable onPress={() => navigation.navigate('product-screen')}>
@@ -115,12 +116,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   menuIcon: {
+    borderBottomColor:"black",
+    borderTopColor:"gray",
+    borderLeftColor:"black",
+    borderRightColor:"gray",
+    borderWidth:1,   
     justifyContent: 'center',
-    backgroundColor: 'black',
     alignItems: 'center',
     borderRadius: 25,
-    width: 40,
-    height: 40,
+    width: 50, 
+    height: 50, 
+    overflow: 'hidden', 
+  },
+  menuIconImage: {
+    width: '100%', 
+    height: '100%', 
+    borderRadius: 25, 
   },
   PressableStyle: {
     flexDirection: 'row',
