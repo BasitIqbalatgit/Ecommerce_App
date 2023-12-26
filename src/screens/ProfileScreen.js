@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Text, View, Image, Pressable, ToastAndroid, StyleSheet } from "react-native";
+import { Text, View, Image, Pressable, ToastAndroid,Platform, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import User from "../../assets/user.png";
 import AuthContext from "../features/context/authContext";
@@ -11,7 +11,10 @@ const ProfileScreen = ({navigation}) => {
   const handleLogout = async () => {
     const res = await logout();
     if (res.success === true) {
-      ToastAndroid.show("Logged Out Successfully", ToastAndroid.BOTTOM);
+      if (Platform.OS === 'android') {
+        ToastAndroid.show("Logged Out Successfully", ToastAndroid.BOTTOM);
+      }
+      
       setIsLoggedIn(false);
       setCurrentUser(null);
 

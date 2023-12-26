@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, View, Pressable, Image, ToastAndroid, ScrollView } from "react-native";
+import { Text, View, Pressable, Image, ToastAndroid,Platform ,ScrollView } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ProductContext from "../features/context/productContext";
@@ -31,7 +31,9 @@ const DetailScreen = ({ navigation, route }) => {
   const addItemToCart = async () => {
     const res = await addToCart(id, qty);
     if (res.success) {
+      if (Platform.OS === 'android') {
       ToastAndroid.show("Item added to cart", ToastAndroid.BOTTOM);
+      }
       setCartItems(res.data);
     }
   };

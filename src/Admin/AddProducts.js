@@ -6,7 +6,7 @@ import { AddProduct } from '../features/firebase/Product'
 
 const AddProducts = ({ navigation }) => {
     const [brand, setBrand] = useState("");
-    const [des, setDes] = useState("");
+    const [description, setDescription] = useState("");
     const [image, setImage] = useState("");
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState("");
@@ -15,12 +15,12 @@ const AddProducts = ({ navigation }) => {
 
     
     const handleSave = async () => {
-        const newProduct = { brand, des, image, title, price };
+        const newProduct = { brand, description, image, title, price };
         const newData = [...data, newProduct];
     
         setData(newData); 
         setBrand("");
-        setDes("");
+        setDescription("");
         setImage("");
         setTitle("");
         setPrice("");
@@ -76,8 +76,8 @@ const AddProducts = ({ navigation }) => {
                     multiline={true}
                     maxLines={20}
                     style={styles.input}
-                    value={des}
-                    onChangeText={setDes}
+                    value={description}
+                    onChangeText={setDescription}
                 />
 
                 <TextInput
