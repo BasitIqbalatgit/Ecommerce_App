@@ -74,7 +74,7 @@ import {
                 textAlign: "center",
               }}
             >
-              Create an account so you can explore all the existing jobs
+              Create an account so you can explore all the things you want
             </Text>
           </View>
           <View
